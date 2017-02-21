@@ -26,6 +26,25 @@ app.directive('myDirective',function(){
     //     }
     // }
 })
-app.controller('myCtrl',function($scope){
-    
+// app.controller('myCtrl',function($scope){
+//     $scope.someBareValue='hello computer';
+//     $scope.someAction=function(){
+//         $scope.someBareValue='hello human,from parent';
+//     }
+// }).controller('childCtrl',function($scope){
+//     $scope.childAction=function(){
+//         $scope.someBareValue='hello human,from child'
+//     }
+// })
+app.controller('someCtrl',function($scope){
+    $scope.someModel={
+        someValue:'hello computer'
+    }
+    $scope.someAction=function(){
+        $scope.someModel.someValue='hello human,from parent'
+    }
+}).controller('childCtrl',function($scope){
+    $scope.childAction=function(){
+        $scope.someModel.someValue='hello human,from child'
+    }
 })

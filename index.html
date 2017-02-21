@@ -5,8 +5,22 @@
         <meta charset="utf-8" />
     </head>
     <body ng-app="myApp">
-        <div ng-controller="myCtrl">
-            {{test}}
+        <!--<div ng-controller="myCtrl">
+            {{someBareValue}}
+            <button ng-click="someAction()">Communicate to child</button>
+            <div ng-controller="childCtrl">
+                {{someBareValue}}
+                <button ng-click="childAction()">Communicate to parent</button>
+            </div>
+
+        </div>-->
+        <div ng-controller="someCtrl">
+            {{someModel.someValue}}
+            <button ng-click="someAction()">Communicate to child</button>
+            <div ng-controller="childCtrl">
+                {{someModel.someValue}}
+                <button ng-click="childAction()">Communicate to parent</button>
+            </div>
         </div>
     </body>
 
