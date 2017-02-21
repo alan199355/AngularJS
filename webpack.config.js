@@ -4,20 +4,13 @@ module.exports = {
         "./angular-practice.js"
     ],
     output: {
-        path: './build',
+        path: __dirname,
         filename: 'bundle.js'
     },
     module: {
         loaders: [        
-        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-        { test: /\.css$/, loader: "style!css" },
+            { test: /\.css$/, loader: "style!css" },
  
         ]
-    },
-    resolve:{
-        extensions:['','.js','.json']
-    },
-    plugins: [
-        new webpack.NoErrorsPlugin()
-    ]
+    }
 };

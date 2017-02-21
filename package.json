@@ -2,6 +2,8 @@
   "dependencies": {
     "angular": "^1.6.2",
     "babel-loader": "^6.3.2",
-    "css-loader": "^0.26.1"
+    "css-loader": "^0.26.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
   }
 }
