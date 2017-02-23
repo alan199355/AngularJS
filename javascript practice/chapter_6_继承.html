@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第6章 继承</title>
+	</head>
+	<body>
+		<script>
+			// function Shape(){
+			// 	this.name='Shape';
+			// 	this.toString=function(){
+			// 		return this.name;
+			// 	}
+			// }
+			// function TwoDShape(){
+			// 	this.name='2D shape';
+			// }
+			// function Triangle(side,height){
+			// 	this.name='Triangle';
+			// 	this.side=side;
+			// 	this.height=height;
+			// 	this.getArea=function(){
+			// 		return this.side*this.height/2;
+			// 	}
+			// }
+			// TwoDShape.prototype=new Shape();
+			// TwoDShape.prototype.constructor=TwoDShape;
+			// Triangle.prototype=new TwoDShape();
+			// Triangle.prototype.constructor=Triangle;//对prototype属性进行完全替换时，可能会对对象constructor属性产生一定的副作用。需要对constructor属性进行重置。
+			// var my=new Triangle(5,10);
+			// console.log(my.getArea());
+
+
+			// 通过原型添加共享属性
+
+			//constructor
+			// function Shape(){} 
+			
+			// // argument prototype
+			// Shape.prototype.name='Shape';
+			// Shape.prototype.toString=function(){
+			// 	return this.name;
+			// };
+
+			// // another constructor
+			// function TwoDShape(){}
+			// TwoDShape.prototype=new Shape();
+			// TwoDShape.prototype.constructor=TwoDShape;
+			// TwoDShape.prototype.name='2D Shape';
+
+			// function Triangle(side,height){
+			// 	this.side=side;
+			// 	this.height=height;
+			// }
+			// Triangle.prototype=new TwoDShape();
+			// Triangle.prototype.constructor=Triangle;
+			// Triangle.prototype.name='Triangle';
+			// Triangle.prototype.getArea=function(){
+			// 	return this.side*this.height/2;
+			// }
+			// //通过hasOwnProperty()方法明确自身对象属性与其原型链属性
+			// var my=new Triangle();
+			// my.hasOwnProperty('side');
+			// my.hasOwnProperty('name');
+
+			// 只继承于原型
+			// 这样的继承方法效率更高，但由于子对象与父对象指向的是同一个对象，一旦对象对原型进行修改，父对象也会被修改
+			// function Shape(){}
+			// Shape.prototype.name='name';
+			// Shape.prototype.toString=function(){
+			// 	return this.name;
+			// }
+
+			// function TwoDShape(){}
+			// TwoDShape.prototype=Shape.prototype;
+			// TwoDShape.prototype.constructor=TwoDShape;
+			// TwoDShape.prototype.name='2D Shape';
+
+			// function Triangle(side,height){
+			// 	this.side=side;
+			// 	this.height=height;
+			// }
+			// Triangle.prototype=TwoDShape.prototype;
+			// Triangle.prototype.constructor=Triangle;
+			// Triangle.prototype.name='Triangle';
+			// Triangle.prototype.getArea=function(){
+			// 	return this.side*this.height/2;
+			// }
+
+			// 临时构造器，new F()
+			// 为解决所有prototype都指向相同对象的问题，必须利用某种中介打破这种连锁。即创建一个空函数F()，并将其原型设置为父级构造器。利用new F()来创建不包含父对象属性的对象，同时又可以从父对象prototype属性中继承
+			function Shape(){}
+			Shape.prototype.name='Shape';
+			Shape.prototype.toString=function(){
+				return this.name;
+			}
+
+			function TwoDShape(){}
+			var F=function(){};
+			F.prototype=Shape.prototype;
+			TwoDShape.prototype=new F();
+			TwoDShape.prototype.constructor=TwoDShape;
+			TwoDShape.prototype.name='2D Shape';
+
+			function Triangle(side,height){
+				this.side=side;
+				this.height=height;
+			}
+			var F=function(){};
+			F.prototype=TwoDShape.prototype;
+			Triangle.prototype=new F();
+			Triangle.prototype.constructor=Triangle;
+			Triangle.prototype.name='Triangle';
+			Triangle.prototype.getArea=function(){
+				return this.side*this.height/2;
+			};
+			// 通过这种方法，我们可以保持住原型链
+			my.__proto__==Triangle.prototype;
+			my.__proto__.constructor===Triangle;
+			my.__proto__.__proto__===TwoDShape.prototype;
+			my.__proto__.__proto__.__proto__.constructor===Shape;
+			// 而且父对象属性不会被覆盖
+			var s=new Shape();
+			s.name;
+
+		</script>
+	</body>
+</html>
