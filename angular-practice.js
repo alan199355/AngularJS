@@ -44,7 +44,7 @@ app.factory('test',function(){
         }
     }
 })
-app.controller('someCtrl',function($scope,test){
+app.controller('someCtrl',function($scope,test,$http){
     $scope.events=test.events('alan199355');
     $scope.someModel={
         someValue:'hello computer'
@@ -52,7 +52,21 @@ app.controller('someCtrl',function($scope,test){
     $scope.someAction=function(){
         $scope.someModel.someValue='hello human,from parent'
     }
-    
+    // $http({
+    //     method:'GET',
+    //     url:'test.json'
+    // }).success(function(data){
+    //     console.log(data)
+    // }).error(function(data){
+    //     console.log(data)
+    // })
+    $http.get('/test.json').then(
+    function(data){
+        console.log(data)
+    },
+    function(data){
+
+    })
 
 }).controller('childCtrl',function($scope){
     $scope.childAction=function(){
