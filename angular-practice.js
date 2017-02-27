@@ -1,5 +1,6 @@
 var angular=require('angular')
 var app=angular.module('myApp',[]);
+
 app.directive('myDirective',function(){
     // return {
     //     restrice:'',//String
@@ -36,13 +37,23 @@ app.directive('myDirective',function(){
 //         $scope.someBareValue='hello human,from child'
 //     }
 // })
-app.controller('someCtrl',function($scope){
+app.factory('test',function(){
+    return {
+        events:function(username){
+            return 'hello: '+username
+        }
+    }
+})
+app.controller('someCtrl',function($scope,test){
+    $scope.events=test.events('alan199355');
     $scope.someModel={
         someValue:'hello computer'
     }
     $scope.someAction=function(){
         $scope.someModel.someValue='hello human,from parent'
     }
+    
+
 }).controller('childCtrl',function($scope){
     $scope.childAction=function(){
         $scope.someModel.someValue='hello human,from child'

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第三章 函数</title>
+	</head>
+	<body>
+		
+		
+		<script>
+			function sum(a,b){
+				console.log(a+b);
+				console.log(arguments[2]);//arguments,返回函数接受的所有参数
+			}
+			parseInt("123");//parseInt将输入值转换成整数，可转换成八进制等其他类型
+			parseFloat("123");//与parseInt基本相同，但只能转换成十进制
+			isNaN();//确定输入值是否可以参与运算，也可以将输入值转换为数字
+			isFinite();//检查输入是否是一个既非Infinity也非NaN的数值，若是，返回true
+			encodeURI();//返回一个可用的URL
+			encodeURIComponent();
+			eval("var li=2");//eval会把输入的字符串当做js代码执行
+
+			var a=123;
+			function f(){
+				console.log(a);
+				var a=1;
+				console.log(a);
+			}//1.函数域始终高于全局域；2.当js执行过程进入新的函数时，这个函数内被声明的所有变量都被移动到函数最开始的地方，叫做提升(hoisting)
+			f();
+
+			/*回调函数*/
+			function multiplyByTwo(a,b,c,callback){
+				var i=0;ar=[];
+				for(i=0;i<3;i++){
+					ar[i]=callback(arguments[i]*2);
+				}
+				return ar;
+			}
+			function addOne(a){
+				return a+1;
+			}
+			testArr=multiplyByTwo(1,2,3,function(a){return a+2;});
+			console.log(testArr);
+
+			/*即时函数，第二对括号起的是“立即调用”的作用，同时也可以向匿名函数传递参数*/
+			(function(name){
+				console.log("Hello "+name+" !");
+			})("alan")
+
+			/*内部函数，有助于确保名字空间的纯净，确保私有性*/
+			function outer(param){
+				function inner(theinput){
+					return theinput*2;
+				}
+				return "The result is "+inner(param);
+			}
+
+			/*返回函数的函数*/
+			// function b(){
+			// 	console.log("A");
+			// 	return function(){
+			// 		console.log("B");
+			// 	};
+			// }
+			// var newFun=b();
+			// newFun();
+			// b()();//立即执行
+
+			/*重写自己的函数*/
+			function c(){
+				console.log("A");
+				c=function(){
+					console.log("C");
+				};
+			}
+			var d=(function(){
+					function someSetup(){
+						var setup="done";
+					}
+					function actualWork(){
+						console.log("worky");
+					}
+					someSetup();
+					return actualWork;
+				}() );
+			
+			/*作用域链*/
+			var glo=1;
+			function outer(){
+				var outer_local=2;
+				function inner(){
+					var inner_local=3;
+					return inner_local+outer_local+glo;
+				}
+				return inner();
+			}
+			console.log(outer());
+			
+			/*闭包#1*/
+			var glob="global variable";
+			var E=function(){
+				var loca="local variable";
+				var N=function(){
+					var inner_loc="inner local";
+					return loca;
+				};
+				return N;
+			};
+			var closure_1=E();
+			console.log(closure_1());
+
+			/*闭包#2*/
+			var clo_inner2;
+			var clo2_F=function(){
+				var clo_b2="local variable2";
+				var clo_N2=function(){
+					return clo_b2;
+				};
+				clo_inner2=clo_N2;
+			};
+			console.log(clo2_F());
+
+			/*闭包#3*/
+			function clo_F3(param){
+				var clo_N3=function(){
+					return param;
+				};
+				param++;
+				return clo_N3;
+			}
+			var clo_inner3=clo_F3(123);
+			console.log(clo_inner3());//调用返回函数时，param已经执行过一次递增操作了；
+
+			/*循环中的闭包*/
+			function for_F(){
+				var arr=[],i;
+				for (i = 0; i < 3; i++) {
+					// arr[i]=function(){
+					// 	return i;
+					// };
+					arr[i]=(function(x){
+						return function(){
+							return x;
+						}
+					})(i);					
+				}
+				return arr;
+			}
+			var arr=for_F();
+			console.log(arr[1]());	
+
+			/*getter与setter*/
+			var getValue,setValue;
+			(function(){
+				var secret=0;
+				getValue=function(){
+					return secret;
+				};
+				setValue=function(v){
+					if (typeof v==="number") {
+						secret=v;
+					}
+				};
+			}());
+
+			/*迭代器*/
+			function setup(x){
+				var i=0;
+				return function(){
+					return x[i++];
+				};
+			}
+			var next=setup(["a","b","c"]);
+		</script>
+	</body>
+</html>

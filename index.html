@@ -15,6 +15,7 @@
 
         </div>-->
         <div ng-controller="someCtrl">
+            <div>{{events}} </div>
             {{someModel.someValue}}
             <button ng-click="someAction()">Communicate to child</button>
             <div ng-controller="childCtrl">
