@@ -1,5 +1,6 @@
 var angular=require('angular')
-var app=angular.module('myApp',[]);
+var ngResource=require('angular-resource')
+var app=angular.module('myApp',['ngResource']);
 
 app.directive('myDirective',function(){
     // return {
@@ -43,6 +44,9 @@ app.factory('test',function(){
             return 'hello: '+username
         }
     }
+});
+app.config(function($httpProvider){
+    $httpProvider.defaults.headers.common['X-Posted-By']='angular'
 })
 app.controller('someCtrl',function($scope,test,$http){
     $scope.events=test.events('alan199355');
@@ -61,12 +65,12 @@ app.controller('someCtrl',function($scope,test,$http){
     //     console.log(data)
     // })
     $http.get('/test.json').then(
-    function(data){
-        console.log(data)
-    },
-    function(data){
+        function(data){
+            console.log(data)
+        },
+        function(data){
 
-    })
+        })
 
 }).controller('childCtrl',function($scope){
     $scope.childAction=function(){
