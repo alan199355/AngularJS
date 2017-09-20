@@ -3,6 +3,7 @@
     <head>
         <title>AngularJS practice</title>
         <meta charset="utf-8" />
+        
     </head>
     <body ng-app="myApp">
         <!--<div ng-controller="myCtrl">
@@ -14,13 +15,21 @@
             </div>
 
         </div>-->
-        <div ng-controller="someCtrl">
+        <!--<div ng-controller="someCtrl">
             <div>{{events}} </div>
             {{someModel.someValue}}
             <button ng-click="someAction()">Communicate to child</button>
             <div ng-controller="childCtrl">
                 {{someModel.someValue}}
                 <button ng-click="childAction()">Communicate to parent</button>
+            </div>
+        </div>-->
+        <div class="container" ng-controller="myController as vm">            
+            <p ng-repeat="item in vm.countList" id="item{{$index+1}}" count-down ng-second={{item.second}}>
+
+            </p>
+            <div class="appDownloadBanner">
+
             </div>
         </div>
     </body>
